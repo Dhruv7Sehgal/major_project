@@ -13,7 +13,7 @@ const Page = async () => {
 
   console.log(products);
   return (
-    <div className="w-full p-10">
+    <div className="flex flex-wrap gap-6 w-full p-16">
       {products.map((item, key) => (
         <Products key={key} product={JSON.parse(JSON.stringify(item))} />
       ))}

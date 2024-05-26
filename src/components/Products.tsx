@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Products({ product }: any) {
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 w-full">
+    <div className="w-[250px]">
       <div className="group relative rounded-lg overflow-hidden shadow-lg transition-all hover:shadow-xl">
         <Image
           alt="Product Image"
@@ -17,15 +17,15 @@ export default function Products({ product }: any) {
             {product.title}
           </h3>
           <p className="text-sm text-gray-500 dark:text-gray-400 line-clamp-2 mt-2">
-            Soft and warm knitted sweater perfect for the changing seasons.
+            {product.description}
           </p>
           <div className="flex items-center justify-between mt-4">
             <div className="flex flex-col">
               <span className="text-2xl font-bold text-gray-900 dark:text-gray-50">
-                $49.99
+                {product.price}
               </span>
               <span className="text-sm font-medium text-gray-500 dark:text-gray-400 line-through">
-                $59.99
+                {product.discountprice}
               </span>
             </div>
             <Button size="sm">Add to Cart</Button>
