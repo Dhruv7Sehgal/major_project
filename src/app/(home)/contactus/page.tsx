@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/button";
 
 export default function Contactus() {
   return (
-    <Card className="w-full max-w-2xl mx-auto">
+    <Card className="w-full max-w-2xl mx-auto mt-10 mb-10">
       <CardHeader>
         <CardTitle>Get in Touch</CardTitle>
         <CardDescription>

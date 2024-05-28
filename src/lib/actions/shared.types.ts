@@ -1,3 +1,5 @@
+import { Schema } from "mongoose";
+
 export interface SignUpParams {
   username: string;
   email: string;
@@ -13,4 +15,8 @@ export interface GetProductsParams {
   query?: string;
   page?: number;
   filter?: string;
+}
+
+export interface GetProductsParamsById {
+  productId: string | Schema.Types.ObjectId;
 }

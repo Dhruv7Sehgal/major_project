@@ -1,9 +1,12 @@
 import { Button } from "@/components/ui/button";
+import { getProductById } from "@/lib/actions/product.action";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const Productpage = () => {
+const Productpage = async ({ params }: any) => {
+  const product = await getProductById(params.id);
+  console.log(product);
   return (
     <div className="w-full max-w-6xl mx-auto px-4 md:px-6 py-12 md:py-20 lg:py-24">
       <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-start">

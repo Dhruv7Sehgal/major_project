@@ -1,8 +1,4 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/IRYhQFwBuNK
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
+"use client";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,11 +9,21 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
+import useCartStore from "@/app/cartStore";
+import Image from "next/image";
 
 export default function Nav() {
+  const cart = useCartStore((state) => state.cart);
+  const incrementCart = useCartStore((state) => state.incrementQuantity);
+  const decrementCart = useCartStore((state) => state.decrementQuantity);
+
+  const calculateSubtotal = () => {
+    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
+
   return (
     <header className="flex h-16 w-full items-center justify-between px-4 md:px-6 bg-white dark:bg-gray-950 shadow">
-      <Link className="flex items-center gap-2" href="#">
+      <Link className="flex items-center gap-2" href="/">
         <MountainIcon className="h-6 w-6" />
         <span className="text-lg font-semibold">Acme Store</span>
       </Link>
@@ -32,7 +38,7 @@ export default function Nav() {
           className="text-sm font-medium hover:underline hover:underline-offset-4"
           href="#"
         >
-          Shop
+          Orders
         </Link>
         <Link
           className="text-sm font-medium hover:underline hover:underline-offset-4"
@@ -83,75 +89,64 @@ export default function Nav() {
             <div className="flex flex-col gap-4">
               <div className="flex items-center justify-between">
                 <h3 className="text-lg font-semibold">Your Cart</h3>
-                <Link className="text-sm font-medium text-primary" href="#">
+                <Link
+                  className="text-sm font-medium text-primary"
+                  href="addtocart"
+                >
                   View Cart
                 </Link>
               </div>
               <div className="flex flex-col gap-4">
-                <div className="flex items-center gap-4">
-                  <img
-                    alt="Product Name"
-                    className="rounded-md"
-                    height={80}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "80/80",
-                      objectFit: "cover",
-                    }}
-                    width={80}
-                  />
-                  <div className="flex-1">
-                    <h4 className="text-sm font-medium">Product Name</h4>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      $19.99
-                    </p>
+                {cart.map((item) => (
+                  <div className="flex items-center gap-4">
+                    <Image
+                      alt="Product Name"
+                      className="rounded-md"
+                      height={80}
+                      src={item.thumbnail}
+                      style={{
+                        aspectRatio: "80/80",
+                        objectFit: "cover",
+                      }}
+                      width={80}
+                    />
+                    <div className="flex-1">
+                      <h4 className="text-sm font-medium">{item.title}</h4>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                        ${item.price}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        onClick={() => {
+                          decrementCart(item._id);
+                        }}
+                        size="icon"
+                        variant="ghost"
+                      >
+                        <MinusIcon className="h-4 w-4" />
+                        <span className="sr-only">Decrease quantity</span>
+                      </Button>
+                      <span className="text-sm font-medium">
+                        {item.quantity}
+                      </span>
+                      <Button
+                        onClick={() => {
+                          incrementCart(item._id);
+                        }}
+                        size="icon"
+                        variant="ghost"
+                      >
+                        <PlusIcon className="h-4 w-4" />
+                        <span className="sr-only">Increase quantity</span>
+                      </Button>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Button size="icon" variant="ghost">
-                      <MinusIcon className="h-4 w-4" />
-                      <span className="sr-only">Decrease quantity</span>
-                    </Button>
-                    <span className="text-sm font-medium">1</span>
-                    <Button size="icon" variant="ghost">
-                      <PlusIcon className="h-4 w-4" />
-                      <span className="sr-only">Increase quantity</span>
-                    </Button>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4">
-                  <img
-                    alt="Product Name"
-                    className="rounded-md"
-                    height={80}
-                    src="/placeholder.svg"
-                    style={{
-                      aspectRatio: "80/80",
-                      objectFit: "cover",
-                    }}
-                    width={80}
-                  />
-                  <div className="flex-1">
-                    <h4 className="text-sm font-medium">Another Product</h4>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      $29.99
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Button size="icon" variant="ghost">
-                      <MinusIcon className="h-4 w-4" />
-                      <span className="sr-only">Decrease quantity</span>
-                    </Button>
-                    <span className="text-sm font-medium">2</span>
-                    <Button size="icon" variant="ghost">
-                      <PlusIcon className="h-4 w-4" />
-                      <span className="sr-only">Increase quantity</span>
-                    </Button>
-                  </div>
-                </div>
+                ))}
               </div>
               <div className="flex items-center justify-between">
                 <p className="text-sm font-medium">Total:</p>
-                <p className="text-sm font-medium">$79.97</p>
+                <p className="text-sm font-medium">${calculateSubtotal()}</p>
               </div>
               <Button className="w-full">Checkout</Button>
             </div>
@@ -176,9 +171,9 @@ export default function Nav() {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
             <DropdownMenuItem>
-              <Link className="flex items-center gap-2" href="/signin">
+              <Link className="flex items-center gap-2" href="signin">
                 <UserIcon className="h-4 w-4" />
-                <span>Sign In</span>
+                <Link href="signin">Sign In</Link>
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem>
