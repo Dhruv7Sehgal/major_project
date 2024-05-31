@@ -97,8 +97,8 @@ export default function Nav() {
                 </Link>
               </div>
               <div className="flex flex-col gap-4">
-                {cart.map((item) => (
-                  <div className="flex items-center gap-4">
+                {cart.map((item, index) => (
+                  <div key={index} className="flex items-center gap-4">
                     <Image
                       alt="Product Name"
                       className="rounded-md"

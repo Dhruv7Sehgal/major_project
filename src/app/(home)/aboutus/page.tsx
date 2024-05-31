@@ -1,9 +1,3 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/Jvd8nc0ea4k
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
-import Link from "next/link";
 import { AvatarImage, AvatarFallback, Avatar } from "@/components/ui/avatar";
 
 export default function AboutUs() {
@@ -18,9 +12,10 @@ export default function AboutUs() {
               </h2>
               <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
                 Acme Inc. was founded in 2010 with the goal of revolutionizing
-                the way businesses approach technology. Over the years, we've
-                grown into a leading provider of innovative solutions that help
-                our clients thrive in a rapidly changing digital landscape.
+                the way businesses approach technology. Over the years,
+                we&apos;ve grown into a leading provider of innovative solutions
+                that help our clients thrive in a rapidly changing digital
+                landscape.
               </p>
             </div>
             <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
