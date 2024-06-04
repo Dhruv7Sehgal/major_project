@@ -4,9 +4,17 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const Productpage = async ({ params }: any) => {
-  const product = await getProductById(params.id);
-  console.log(product);
+const Productpage = async ({
+  params,
+}: {
+  params: {
+    id: string;
+  };
+}) => {
+  const product = await getProductById({
+    productId: params.id,
+  });
+
   return (
     <div className="w-full max-w-6xl mx-auto px-4 md:px-6 py-12 md:py-20 lg:py-24">
       <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-start">
@@ -14,7 +22,7 @@ const Productpage = async ({ params }: any) => {
           <div className="hidden md:flex items-start">
             <div className="grid gap-6">
               <div className="grid gap-4">
-                <h1 className="font-bold text-4xl">ads</h1>
+                <h1 className="font-bold text-4xl">{product?.title}</h1>
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-0.5">
                     <StarIcon className="w-6 h-6 fill-primary" />
@@ -23,21 +31,14 @@ const Productpage = async ({ params }: any) => {
                     <StarIcon className="w-6 h-6 fill-muted stroke-muted-foreground" />
                     <StarIcon className="w-6 h-6 fill-muted stroke-muted-foreground" />
                   </div>
-                  <div className="text-sm text-gray-500 dark:text-gray-400">
-                    4.2 out of 5 (23 reviews)
-                  </div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400"></div>
                 </div>
               </div>
               <div className="grid gap-4 text-lg leading-relaxed">
-                <p>
-                  Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                  Incidunt accusantium rem earum, tenetur quos adipisci quae
-                  dolorem recusandae minus libero veniam. Quod provident quos
-                  praesentium vel amet voluptates dignissimos facilis.
-                </p>
+                <p>{product?.description}</p>
               </div>
             </div>
-            <div className="text-4xl font-bold ml-auto">sda</div>
+            <div className="text-4xl font-bold ml-auto">${product?.price}</div>
           </div>
           <div className="grid gap-6 md:gap-10">
             <div className="grid gap-4">
@@ -73,7 +74,7 @@ const Productpage = async ({ params }: any) => {
                       alt="Related Product"
                       className="w-full h-full object-cover transition-all duration-300 group-hover:scale-105"
                       height={600}
-                      src="/placeholder.svg"
+                      src={product?.thumbnail}
                       style={{
                         aspectRatio: "450/600",
                         objectFit: "cover",
@@ -96,11 +97,11 @@ const Productpage = async ({ params }: any) => {
                     className="aspect-[3/4] relative block overflow-hidden rounded-lg"
                     href="#"
                   >
-                    <img
+                    <Image
                       alt="Related Product"
                       className="w-full h-full object-cover transition-all duration-300 group-hover:scale-105"
                       height={600}
-                      src="/placeholder.svg"
+                      src={product?.thumbnail}
                       style={{
                         aspectRatio: "450/600",
                         objectFit: "cover",
@@ -123,11 +124,11 @@ const Productpage = async ({ params }: any) => {
                     className="aspect-[3/4] relative block overflow-hidden rounded-lg"
                     href="#"
                   >
-                    <img
+                    <Image
                       alt="Related Product"
                       className="w-full h-full object-cover transition-all duration-300 group-hover:scale-105"
                       height={600}
-                      src="/placeholder.svg"
+                      src={product?.thumbnail}
                       style={{
                         aspectRatio: "450/600",
                         objectFit: "cover",
@@ -153,7 +154,7 @@ const Productpage = async ({ params }: any) => {
           <div className="flex md:hidden items-start">
             <div className="grid gap-6">
               <div className="grid gap-4">
-                <h1 className="font-bold text-3xl">CottonSculpt Prism Tee</h1>
+                <h1 className="font-bold text-3xl">{product?.title}</h1>
                 <div>
                   <p>60% combed ringspun cotton/40% polyester jersey tee.</p>
                 </div>
@@ -178,7 +179,7 @@ const Productpage = async ({ params }: any) => {
               alt="Product Image"
               className="aspect-[3/4] object-cover border border-gray-200 w-full rounded-lg overflow-hidden dark:border-gray-800"
               height={800}
-              src=""
+              src={product?.thumbnail}
               width={600}
             />
             <div className="flex flex-col gap-4">

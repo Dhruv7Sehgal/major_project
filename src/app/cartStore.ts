@@ -1,24 +1,13 @@
+import { ProductSchema } from "@/lib/types";
 import { create } from "zustand";
 
-export interface Product {
-  _id: string;
-  title: string;
-  description: string;
-  price: number;
-  discountPrice: number;
-  brand: string;
-  stock: number;
-  category: string;
-  thumbnail: string;
-}
-
-interface CartItem extends Product {
+interface CartItem extends ProductSchema {
   quantity: number;
 }
 
 interface CartState {
   cart: CartItem[];
-  addProduct: (product: Product) => void;
+  addProduct: (product: ProductSchema) => void;
   removeProduct: (_id: string) => void;
   incrementQuantity: (_id: string) => void;
   decrementQuantity: (_id: string) => void;

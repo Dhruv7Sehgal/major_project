@@ -11,14 +11,46 @@ import {
 import { Input } from "@/components/ui/input";
 import useCartStore from "@/app/cartStore";
 import Image from "next/image";
+import { logOutUser } from "@/lib/actions/user.action";
+import { useRouter } from "next/navigation";
 
-export default function Nav() {
+export default function Nav({ user }: any) {
   const cart = useCartStore((state) => state.cart);
   const incrementCart = useCartStore((state) => state.incrementQuantity);
   const decrementCart = useCartStore((state) => state.decrementQuantity);
 
   const calculateSubtotal = () => {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await logOutUser();
+    router.refresh();
+  };
+
+  const renderIcon = () => {
+    if (user?.value === undefined || user?.value === null) {
+      return null;
+    } else if (user?.value === "admin") {
+      return (
+        <DropdownMenuItem>
+          <p className="flex items-center gap-2">
+            <UserIcon className="h-4 w-4" />
+            <Link href="/dashboard">Dashboard </Link>
+          </p>
+        </DropdownMenuItem>
+      );
+    } else {
+      return (
+        <DropdownMenuItem>
+          <p className="flex items-center gap-2">
+            <UserIcon className="h-4 w-4" />
+            {user?.value}
+          </p>
+        </DropdownMenuItem>
+      );
+    }
   };
 
   return (
@@ -155,7 +187,7 @@ export default function Nav() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button className="rounded-full" size="icon" variant="ghost">
-              <img
+              <Image
                 alt="User Avatar"
                 className="rounded-full"
                 height={32}
@@ -170,12 +202,7 @@ export default function Nav() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuItem>
-              <Link className="flex items-center gap-2" href="signin">
-                <UserIcon className="h-4 w-4" />
-                <Link href="signin">Sign In</Link>
-              </Link>
-            </DropdownMenuItem>
+            {renderIcon()}
             <DropdownMenuItem>
               <Link className="flex items-center gap-2" href="#">
                 <SettingsIcon className="h-4 w-4" />
@@ -184,10 +211,17 @@ export default function Nav() {
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem>
-              <Link className="flex items-center gap-2" href="#">
-                <LogOutIcon className="h-4 w-4" />
-                <span>Logout</span>
-              </Link>
+              {user?.value ? (
+                <p onClick={handleLogout} className="flex items-center gap-2">
+                  <LogOutIcon className="h-4 w-4" />
+                  <span>Logout</span>
+                </p>
+              ) : (
+                <Link className="flex items-center gap-2" href="/signin">
+                  <LogOutIcon className="h-4 w-4" />
+                  <span>Login</span>
+                </Link>
+              )}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

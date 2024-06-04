@@ -1,7 +1,12 @@
+import Dashboard from "@/components/Dashboard";
 import React from "react";
 
-const page = () => {
-  return <div>page</div>;
+const DashboardPage = () => {
+  return (
+    <div className="w-full">
+      <Dashboard />
+    </div>
+  );
 };
 
-export default page;
+export default DashboardPage;

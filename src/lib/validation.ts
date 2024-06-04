@@ -10,3 +10,14 @@ export const signInSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8, "Incorrect Password"),
 });
+
+export const addProductSchema = z.object({
+  title: z.string().min(5),
+  description: z.string(),
+  price: z.string(),
+  discountPrice: z.string(),
+  brand: z.string(),
+  stock: z.string(),
+  category: z.string(),
+  thumbnail: z.string(),
+});

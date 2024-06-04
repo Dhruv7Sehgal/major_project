@@ -96,7 +96,7 @@ export default function Signin() {
 
             <CardFooter>
               <Button type="submit" className="w-full">
-                Sign Up
+                Sign In
               </Button>
             </CardFooter>
           </Card>

@@ -1,7 +1,10 @@
-import { revalidatePath } from "next/cache";
-import Product from "../../../database/product.model";
+"use server";
+
 import { connectToDatabase } from "../mongoose";
 import { GetProductsParams, GetProductsParamsById } from "./shared.types";
+import Product from "../../../database/product.model";
+import { ProductSchema } from "../types";
+import { revalidatePath } from "next/cache";
 
 export async function getProducts(params: GetProductsParams) {
   try {
@@ -22,11 +25,44 @@ export async function getProductById(params: GetProductsParamsById) {
 
     const { productId } = params;
 
-    const products = await Product.findById({ productId });
+    const product: ProductSchema | null = await Product.findById(productId);
 
-    return { products };
+    return product;
   } catch (error) {
     console.log(error);
     throw error;
+  }
+}
+
+export async function addProduct(params: any) {
+  try {
+    connectToDatabase();
+
+    const {
+      title,
+      thumbnail,
+      description,
+      price,
+      discountPrice,
+      brand,
+      stock,
+      category,
+    } = params;
+
+    await Product.create({
+      title,
+      description,
+      price: Number(price),
+      discountPrice: Number(discountPrice),
+      brand,
+      thumbnail,
+      stock,
+      category,
+    });
+
+    revalidatePath("/");
+  } catch (err) {
+    console.log(err);
+    throw err;
   }
 }

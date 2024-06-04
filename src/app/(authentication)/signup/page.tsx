@@ -43,6 +43,7 @@ export default function Signup() {
   async function onSubmit(values: z.infer<typeof signUpSchema>) {
     try {
       await signUpUsers(values);
+      router.push("/signin");
     } catch (err: any) {
       toast(err.message);
     }
