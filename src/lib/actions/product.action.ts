@@ -66,3 +66,17 @@ export async function addProduct(params: any) {
     throw err;
   }
 }
+
+export async function deleteProduct(params: any) {
+  try {
+    connectToDatabase();
+    const { productId } = params;
+
+    await Product.findByIdAndDelete(productId);
+
+    revalidatePath("/");
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}

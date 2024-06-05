@@ -9,10 +9,18 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import useCartStore from "@/app/cartStore";
 import Image from "next/image";
 import { logOutUser } from "@/lib/actions/user.action";
 import { useRouter } from "next/navigation";
+import useCartStore from "@/app/cartStore";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "./ui/navigation-menu";
 
 export default function Nav({ user }: any) {
   const cart = useCartStore((state) => state.cart);
@@ -59,25 +67,25 @@ export default function Nav({ user }: any) {
         <MountainIcon className="h-6 w-6" />
         <span className="text-lg font-semibold">Acme Store</span>
       </Link>
-      <nav className="hidden gap-4 md:flex">
+      <nav className="hidden gap-4 items-center md:flex">
         <Link
           className="text-sm font-medium hover:underline hover:underline-offset-4"
           href="/"
         >
           Home
         </Link>
-        <Link
-          className="text-sm font-medium hover:underline hover:underline-offset-4"
-          href="#"
-        >
-          Orders
-        </Link>
-        <Link
-          className="text-sm font-medium hover:underline hover:underline-offset-4"
-          href="#"
-        >
-          Collections
-        </Link>
+        <NavigationMenu>
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger className="border-none hover:bg-white">
+                Catagories
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <NavigationMenuLink>sedx</NavigationMenuLink>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
         <Link
           className="text-sm font-medium hover:underline hover:underline-offset-4"
           href="aboutus"
@@ -92,9 +100,21 @@ export default function Nav({ user }: any) {
         </Link>
       </nav>
       <div className="flex items-center gap-4">
+        {/* <div className="relative max-md:hidden">
+          <Input
+            type="text"
+            placeholder="Search products..."
+            className="bg-gray-100 dark:bg-gray-800 dark:text-gray-50 px-4 py-2 rounded-md w-64"
+          />
+          <SearchIcon className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 dark:text-gray-400" />
+        </div> */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button className="rounded-full" size="icon" variant="ghost">
+            <Button
+              className="rounded-full lg:hidden"
+              size="icon"
+              variant="ghost"
+            >
               <SearchIcon className="h-5 w-5" />
               <span className="sr-only">Search</span>
             </Button>
@@ -217,7 +237,7 @@ export default function Nav({ user }: any) {
                   <span>Logout</span>
                 </p>
               ) : (
-                <Link className="flex items-center gap-2" href="/signin">
+                <Link className="flex items-center w-full gap-2" href="/signin">
                   <LogOutIcon className="h-4 w-4" />
                   <span>Login</span>
                 </Link>

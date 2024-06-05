@@ -22,6 +22,7 @@ import {
   Select,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
+import Image from "next/image";
 
 export default function AddToCart() {
   return (
@@ -62,7 +63,7 @@ export default function AddToCart() {
             <TableBody>
               <TableRow>
                 <TableCell className="hidden md:table-cell">
-                  <img
+                  <Image
                     alt="Product image"
                     className="aspect-square rounded-md object-cover"
                     height="64"
@@ -126,7 +127,7 @@ export default function AddToCart() {
           <h2 className="text-xl font-bold">Recommended for You</h2>
           <div className="grid gap-4">
             <div className="flex items-center gap-4">
-              <img
+              <Image
                 alt="Product image"
                 className="aspect-square rounded-md object-cover"
                 height="64"
@@ -143,7 +144,7 @@ export default function AddToCart() {
               </Button>
             </div>
             <div className="flex items-center gap-4">
-              <img
+              <Image
                 alt="Product image"
                 className="aspect-square rounded-md object-cover"
                 height="64"

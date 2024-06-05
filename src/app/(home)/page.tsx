@@ -13,8 +13,7 @@ import Image from "next/image";
 
 const Page = async () => {
   const cookieStore = cookies();
-  const isAdmin = cookieStore.get("username");
-  console.log(isAdmin);
+  const user = cookieStore.get("username");
   const result = await getProducts({});
 
   const products = result.products;
@@ -136,7 +135,11 @@ const Page = async () => {
         </section>
         <div className="flex flex-wrap gap-6 w-full p-16">
           {products.map((item, key) => (
-            <Products key={key} product={JSON.parse(JSON.stringify(item))} />
+            <Products
+              user={user}
+              key={key}
+              product={JSON.parse(JSON.stringify(item))}
+            />
           ))}
         </div>
       </div>

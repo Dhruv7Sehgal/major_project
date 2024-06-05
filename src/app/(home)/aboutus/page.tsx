@@ -10,7 +10,7 @@ export default function AboutUs() {
               <h2 className="text-3xl text-center font-bold tracking-tighter sm:text-4xl md:text-5xl">
                 Our Story
               </h2>
-              <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
+              <p className="text-center mx-auto max-w-[700px] text-gray-500 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed dark:text-gray-400">
                 Acme Inc. was founded in 2010 with the goal of revolutionizing
                 the way businesses approach technology. Over the years,
                 we&apos;ve grown into a leading provider of innovative solutions
@@ -77,15 +77,15 @@ export default function AboutUs() {
               <div className="flex flex-col items-center justify-center space-y-3">
                 <Avatar className="h-20 w-20">
                   <AvatarImage alt="Jane Doe" src="/placeholder-avatar.jpg" />
-                  <AvatarFallback>JD</AvatarFallback>
+                  <AvatarFallback>DS</AvatarFallback>
                 </Avatar>
                 <div className="text-center">
-                  <h4 className="text-lg font-medium">Jane Doe</h4>
+                  <h4 className="text-lg font-medium">Dhruv Sehgal</h4>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
                     CEO & Co-Founder
                   </p>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Jane is a visionary leader with a passion for driving
+                    Dhruv is a visionary leader with a passion for driving
                     innovation and growth.
                   </p>
                 </div>
@@ -93,16 +93,16 @@ export default function AboutUs() {
               <div className="flex flex-col items-center justify-center space-y-3">
                 <Avatar className="h-20 w-20">
                   <AvatarImage alt="John Smith" src="/placeholder-avatar.jpg" />
-                  <AvatarFallback>JS</AvatarFallback>
+                  <AvatarFallback>OW</AvatarFallback>
                 </Avatar>
                 <div className="text-center">
-                  <h4 className="text-lg font-medium">John Smith</h4>
+                  <h4 className="text-lg font-medium">Ojusvi Wadhwa</h4>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
                     CTO & Co-Founder
                   </p>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    John is a technical visionary who leads our engineering team
-                    with expertise and innovation.
+                    Ojusvi is a technical visionary who leads our engineering
+                    team with expertise and innovation.
                   </p>
                 </div>
               </div>
@@ -112,15 +112,15 @@ export default function AboutUs() {
                     alt="Emily Johnson"
                     src="/placeholder-avatar.jpg"
                   />
-                  <AvatarFallback>EJ</AvatarFallback>
+                  <AvatarFallback>HHS</AvatarFallback>
                 </Avatar>
                 <div className="text-center">
-                  <h4 className="text-lg font-medium">Emily Johnson</h4>
+                  <h4 className="text-lg font-medium">Hamid Hussian Siddqui</h4>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
                     Head of Marketing
                   </p>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Emily is a marketing strategist who drives our brand and
+                    Hamid is a marketing strategist who drives our brand and
                     customer engagement.
                   </p>
                 </div>
@@ -131,15 +131,15 @@ export default function AboutUs() {
                     alt="Michael Brown"
                     src="/placeholder-avatar.jpg"
                   />
-                  <AvatarFallback>MB</AvatarFallback>
+                  <AvatarFallback>PP</AvatarFallback>
                 </Avatar>
                 <div className="text-center">
-                  <h4 className="text-lg font-medium">Michael Brown</h4>
+                  <h4 className="text-lg font-medium">Pratham Poddar</h4>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
                     Head of Sales
                   </p>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Michael is a sales leader who helps our clients achieve
+                    Pratham is a sales leader who helps our clients achieve
                     their business goals.
                   </p>
                 </div>
