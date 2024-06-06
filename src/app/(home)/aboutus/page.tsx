@@ -131,10 +131,10 @@ export default function AboutUs() {
                     alt="Michael Brown"
                     src="/placeholder-avatar.jpg"
                   />
-                  <AvatarFallback>PP</AvatarFallback>
+                  <AvatarFallback>VS</AvatarFallback>
                 </Avatar>
                 <div className="text-center">
-                  <h4 className="text-lg font-medium">Pratham Poddar</h4>
+                  <h4 className="text-lg font-medium">Vasu Singhal</h4>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
                     Head of Sales
                   </p>

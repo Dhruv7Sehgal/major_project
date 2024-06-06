@@ -21,6 +21,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "./ui/navigation-menu";
+import { components } from "@/constants";
 
 export default function Nav({ user }: any) {
   const cart = useCartStore((state) => state.cart);
@@ -81,7 +82,13 @@ export default function Nav({ user }: any) {
                 Catagories
               </NavigationMenuTrigger>
               <NavigationMenuContent>
-                <NavigationMenuLink>sedx</NavigationMenuLink>
+                <NavigationMenuLink>
+                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                    {components.map((component) => (
+                      <li key={component.title}>{component.title}</li>
+                    ))}
+                  </ul>
+                </NavigationMenuLink>
               </NavigationMenuContent>
             </NavigationMenuItem>
           </NavigationMenuList>

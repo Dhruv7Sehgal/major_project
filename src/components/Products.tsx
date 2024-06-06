@@ -62,7 +62,7 @@ export default function Products({ product, user }: any) {
           <div className="flex items-center justify-between mt-4">
             <div className="flex flex-col">
               <span className="text-2xl font-bold text-gray-900 dark:text-gray-50">
-                {product.price}
+                ${product.price}
               </span>
               <span className="text-sm font-medium text-gray-500 dark:text-gray-400 line-through">
                 {product.discountprice}
