@@ -12,9 +12,9 @@ export interface SignInParams {
 }
 
 export interface GetProductsParams {
-  query?: string;
+  query?: string | string[] | undefined;
   page?: number;
-  filter?: string;
+  filter?: string | string[] | undefined;
 }
 
 export interface GetProductsParamsById {

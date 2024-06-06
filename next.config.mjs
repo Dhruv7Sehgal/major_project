@@ -4,17 +4,16 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "www.zdnet.com",
+        hostname: "**",
         port: "",
-        pathname: "/**",
+        pathname: "**",
       },
       {
-        protocol: "https",
-        hostname: "imgs.search.brave.com",
+        protocol: "http",
+        hostname: "**",
         port: "",
-        pathname: "/**",
+        pathname: "**",
       },
-      // Add more domains as needed
     ],
   },
 };

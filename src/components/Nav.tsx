@@ -12,8 +12,7 @@ import { components } from "@/constants";
 import { logOutUser } from "@/lib/actions/user.action";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Search } from "./Search";
 import {
   NavigationMenu,
@@ -33,17 +32,6 @@ export default function Nav({ user }: any) {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0);
   };
   const router = useRouter();
-
-  const [searchParams] = useSearchParams();
-  const [search, setSearch] = useState("");
-
-  const handleSearch = (e: any) => {
-    setSearch(e.target.value);
-
-    setTimeout(() => {
-      router.push(`?query=${e.target.value}`);
-    }, 500);
-  };
 
   const handleLogout = async () => {
     await logOutUser();
@@ -97,7 +85,12 @@ export default function Nav({ user }: any) {
                 <NavigationMenuLink>
                   <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
                     {components.map((component) => (
-                      <li key={component.title}>{component.title}</li>
+                      <Link
+                        href={`?filter=${component.value}`}
+                        key={component.title}
+                      >
+                        {component.title}
+                      </Link>
                     ))}
                   </ul>
                 </NavigationMenuLink>

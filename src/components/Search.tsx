@@ -1,6 +1,8 @@
 "use client";
+
 import { Input } from "@/components/ui/input";
-import { useRouter } from "next/navigation";
+import { updateQueryParams } from "@/lib/utils";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent, useMemo, useState } from "react";
 import { SearchIcon } from "./Nav";
 
@@ -16,13 +18,20 @@ function debounce<T extends (...args: any[]) => void>(func: T, wait: number) {
 export function Search() {
   const router = useRouter();
   const [search, setSearch] = useState("");
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
 
   const debouncedSearch = useMemo(
     () =>
       debounce((value: string) => {
-        router.push(`?query=${value}`);
+        const url =
+          value === ""
+            ? updateQueryParams(pathname, "", "q", searchParams)
+            : updateQueryParams(pathname, value, "q", searchParams);
+
+        router.push(url);
       }, 500),
-    [router]
+    [router, pathname, searchParams]
   );
 
   const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {

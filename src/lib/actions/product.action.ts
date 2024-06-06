@@ -10,7 +10,7 @@ export async function getProducts(params: GetProductsParams) {
   try {
     connectToDatabase();
 
-    const { query } = params;
+    const { query, filter } = params;
 
     let filterQuery = {};
 
@@ -19,6 +19,15 @@ export async function getProducts(params: GetProductsParams) {
         title: {
           $regex: query,
           $options: "i",
+        },
+      };
+    }
+
+    if (filter) {
+      filterQuery = {
+        ...filterQuery,
+        category: {
+          $in: filter,
         },
       };
     }

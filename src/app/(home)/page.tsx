@@ -18,7 +18,8 @@ const Page = async ({
   const cookieStore = cookies();
   const user = cookieStore.get("username");
   const result = await getProducts({
-    query: searchParams.query,
+    query: searchParams?.q || "",
+    filter: searchParams.filter || "",
   });
 
   const products = result.products;
@@ -139,13 +140,17 @@ const Page = async ({
           </Carousel>
         </section>
         <div className="flex flex-wrap gap-6 w-full p-16">
-          {products.map((item, key) => (
-            <Products
-              user={user}
-              key={key}
-              product={JSON.parse(JSON.stringify(item))}
-            />
-          ))}
+          {products.length > 0 ? (
+            products.map((item, key) => (
+              <Products
+                user={user}
+                key={key}
+                product={JSON.parse(JSON.stringify(item))}
+              />
+            ))
+          ) : (
+            <p className="text-3xl font-bold text-center">No Products Found</p>
+          )}
         </div>
       </div>
     </>

@@ -28,16 +28,6 @@ export default function AddToCart() {
               Review and complete your order
             </p>
           </div>
-          <div className="flex items-center gap-2">
-            <Button size="sm" variant="outline">
-              <PrinterIcon className="w-4 h-4 mr-2" />
-              Print
-            </Button>
-            <Button size="sm" variant="outline">
-              <MailIcon className="w-4 h-4 mr-2" />
-              Email
-            </Button>
-          </div>
         </div>
         <div className="border shadow-sm rounded-lg p-4 md:p-6">
           <Table>

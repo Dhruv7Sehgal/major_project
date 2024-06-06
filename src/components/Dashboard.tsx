@@ -172,7 +172,7 @@ export default function Dashboard() {
                         name="category"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Email</FormLabel>
+                            <FormLabel>Category</FormLabel>
                             <Select
                               onValueChange={field.onChange}
                               defaultValue={field.value}
@@ -186,6 +186,9 @@ export default function Dashboard() {
                                 <SelectItem value="mobile">Mobile</SelectItem>
                                 <SelectItem value="laptop">Laptop</SelectItem>
                                 <SelectItem value="watch">Watch</SelectItem>
+                                <SelectItem value="accessories">
+                                  Accessories
+                                </SelectItem>
                               </SelectContent>
                             </Select>
 
