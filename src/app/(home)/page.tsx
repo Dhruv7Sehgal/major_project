@@ -1,20 +1,25 @@
-import React from "react";
-import { cookies } from "next/headers";
-import { getProducts } from "@/lib/actions/product.action";
 import Products from "@/components/Products";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselPrevious,
   CarouselNext,
+  CarouselPrevious,
 } from "@/components/ui/carousel";
+import { getProducts } from "@/lib/actions/product.action";
+import { cookies } from "next/headers";
 import Image from "next/image";
 
-const Page = async () => {
+const Page = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) => {
   const cookieStore = cookies();
   const user = cookieStore.get("username");
-  const result = await getProducts({});
+  const result = await getProducts({
+    query: searchParams.query,
+  });
 
   const products = result.products;
 

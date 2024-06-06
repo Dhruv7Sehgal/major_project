@@ -1,16 +1,29 @@
 "use server";
 
-import { connectToDatabase } from "../mongoose";
-import { GetProductsParams, GetProductsParamsById } from "./shared.types";
-import Product from "../../../database/product.model";
-import { ProductSchema } from "../types";
 import { revalidatePath } from "next/cache";
+import Product from "../../../database/product.model";
+import { connectToDatabase } from "../mongoose";
+import { ProductSchema } from "../types";
+import { GetProductsParams, GetProductsParamsById } from "./shared.types";
 
 export async function getProducts(params: GetProductsParams) {
   try {
     connectToDatabase();
 
-    const products = await Product.find({});
+    const { query } = params;
+
+    let filterQuery = {};
+
+    if (query) {
+      filterQuery = {
+        title: {
+          $regex: query,
+          $options: "i",
+        },
+      };
+    }
+
+    const products = await Product.find(filterQuery);
 
     return { products };
   } catch (error) {

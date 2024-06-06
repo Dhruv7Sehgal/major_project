@@ -1,18 +1,20 @@
 "use client";
-import Link from "next/link";
+import useCartStore from "@/app/cartStore";
 import { Button } from "@/components/ui/button";
 import {
-  DropdownMenuTrigger,
-  DropdownMenuContent,
   DropdownMenu,
+  DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
-import Image from "next/image";
+import { components } from "@/constants";
 import { logOutUser } from "@/lib/actions/user.action";
-import { useRouter } from "next/navigation";
-import useCartStore from "@/app/cartStore";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { Search } from "./Search";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -21,7 +23,6 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "./ui/navigation-menu";
-import { components } from "@/constants";
 
 export default function Nav({ user }: any) {
   const cart = useCartStore((state) => state.cart);
@@ -32,6 +33,17 @@ export default function Nav({ user }: any) {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0);
   };
   const router = useRouter();
+
+  const [searchParams] = useSearchParams();
+  const [search, setSearch] = useState("");
+
+  const handleSearch = (e: any) => {
+    setSearch(e.target.value);
+
+    setTimeout(() => {
+      router.push(`?query=${e.target.value}`);
+    }, 500);
+  };
 
   const handleLogout = async () => {
     await logOutUser();
@@ -117,24 +129,15 @@ export default function Nav({ user }: any) {
         </div> */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button
-              className="rounded-full lg:hidden"
-              size="icon"
-              variant="ghost"
-            >
+            <Button className="rounded-full " size="icon" variant="ghost">
               <SearchIcon className="h-5 w-5" />
               <span className="sr-only">Search</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-80 p-4">
-            <div className="relative">
-              <SearchIcon className="absolute left-4 top-4 h-4 w-4 text-gray-500 dark:text-gray-400" />
-              <Input
-                className="w-full rounded-md border border-gray-300 bg-white px-12 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary dark:border-gray-700 dark:bg-gray-950 dark:text-gray-50"
-                placeholder="Search products..."
-                type="search"
-              />
-            </div>
+            {/* {Search(search, handleSearch) */}
+
+            <Search />
           </DropdownMenuContent>
         </DropdownMenu>
         <DropdownMenu>
@@ -336,7 +339,7 @@ function PlusIcon(props: any) {
   );
 }
 
-function SearchIcon(props: any) {
+export function SearchIcon(props: any) {
   return (
     <svg
       {...props}

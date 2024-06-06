@@ -1,30 +1,23 @@
 "use client";
 
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/Mvkm30hcArK
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
- */
+import useCartStore from "@/app/cartStore";
 import { Button } from "@/components/ui/button";
-import {
-  TableHead,
-  TableRow,
-  TableHeader,
-  TableCell,
-  TableBody,
-  Table,
-} from "@/components/ui/table";
-import {
-  SelectValue,
-  SelectTrigger,
-  SelectItem,
-  SelectContent,
-  Select,
-} from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { MinusIcon } from "lucide-react";
 import Image from "next/image";
 
 export default function AddToCart() {
+  const { cart, removeProduct, incrementQuantity, decrementQuantity } =
+    useCartStore();
+
   return (
     <div className="grid md:grid-cols-[1fr_300px] gap-8 max-w-6xl mx-auto my-12 px-4">
       <div className="grid gap-6">
@@ -54,14 +47,13 @@ export default function AddToCart() {
                   Image
                 </TableHead>
                 <TableHead>Product</TableHead>
-                <TableHead className="text-right">Quantity</TableHead>
                 <TableHead className="text-right">Price</TableHead>
                 <TableHead className="text-right">Total</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              <TableRow>
+              {/* <TableRow>
                 <TableCell className="hidden md:table-cell">
                   <Image
                     alt="Product image"
@@ -74,7 +66,6 @@ export default function AddToCart() {
                 <TableCell className="font-medium">Acme Hoodie</TableCell>
                 <TableCell className="text-right">
                   <Select>
-                    {/* className="w-20" defaultValue="1" */}
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -95,38 +86,85 @@ export default function AddToCart() {
                     <span className="sr-only">Remove</span>
                   </Button>
                 </TableCell>
-              </TableRow>
+              </TableRow> */}
+
+              {cart.map((item) => (
+                <TableRow key={item._id}>
+                  <TableCell className="hidden md:table-cell">
+                    <Image
+                      alt="Product image"
+                      className="aspect-square rounded-md object-cover"
+                      height="64"
+                      src={item.thumbnail || "/placeholder.svg"}
+                      width="64"
+                    />
+                  </TableCell>
+                  <TableCell className="font-medium">{item.title}</TableCell>
+
+                  <TableCell className="text-right">
+                    ${item.price.toFixed(2)}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    ${(item.price * item.quantity).toFixed(2)}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <Button
+                      size="icon"
+                      variant="ghost"
+                      onClick={() => removeProduct(item._id)}
+                    >
+                      <TrashIcon className="w-5 h-5" />
+                      <span className="sr-only">Remove</span>
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         </div>
-        <div className="border shadow-sm rounded-lg p-4 md:p-6">
-          <div className="grid gap-4">
-            <div className="flex items-center justify-between">
-              <div>Subtotal</div>
-              <div>$257.00</div>
+        {cart.length > 0 && (
+          <div className="border shadow-sm rounded-lg p-4 md:p-6">
+            <div className="grid gap-4">
+              <div className="flex items-center justify-between">
+                <div>Subtotal</div>
+                <div>
+                  $
+                  {cart
+                    .reduce((acc, item) => acc + item.price * item.quantity, 0)
+                    .toFixed(2)}
+                </div>
+              </div>
+              <div className="flex items-center justify-between">
+                <div>Shipping</div>
+                <div>$10.00</div>
+              </div>
+              <div className="flex items-center justify-between">
+                <div>Tax</div>
+                <div>$20.00</div>
+              </div>
+              <Separator />
+              <div className="flex items-center justify-between font-bold">
+                <div>Total</div>
+                <div>
+                  $
+                  {(
+                    cart.reduce(
+                      (acc, item) => acc + item.price * item.quantity,
+                      0
+                    ) + 30
+                  ).toFixed(2)}
+                </div>
+              </div>
+              <Button className="w-full">Proceed to Checkout</Button>
             </div>
-            <div className="flex items-center justify-between">
-              <div>Shipping</div>
-              <div>$10.00</div>
-            </div>
-            <div className="flex items-center justify-between">
-              <div>Tax</div>
-              <div>$20.00</div>
-            </div>
-            <Separator />
-            <div className="flex items-center justify-between font-bold">
-              <div>Total</div>
-              <div>$287.00</div>
-            </div>
-            <Button className="w-full">Proceed to Checkout</Button>
           </div>
-        </div>
+        )}
       </div>
       <div className="border shadow-sm rounded-lg p-4 md:p-6">
         <div className="grid gap-4">
-          <h2 className="text-xl font-bold">Recommended for You</h2>
+          <h2 className="text-xl font-bold">Products</h2>
           <div className="grid gap-4">
-            <div className="flex items-center gap-4">
+            {/* <div className="flex items-center gap-4">
               <Image
                 alt="Product image"
                 className="aspect-square rounded-md object-cover"
@@ -159,7 +197,41 @@ export default function AddToCart() {
                 <PlusIcon className="w-5 h-5" />
                 <span className="sr-only">Add to cart</span>
               </Button>
-            </div>
+            </div> */}
+
+            {cart.map((item) => (
+              <div key={item._id} className="flex items-center gap-4">
+                <Image
+                  alt="Product image"
+                  className="aspect-square rounded-md object-cover"
+                  height="64"
+                  src={item.thumbnail || "/placeholder.svg"}
+                  width="64"
+                />
+                <div>
+                  <div className="font-medium">{item.title}</div>
+                  <div className="text-gray-500 dark:text-gray-400">
+                    ${item.price}
+                  </div>
+                </div>
+                <Button
+                  onClick={() => incrementQuantity(item._id)}
+                  size="icon"
+                  variant="ghost"
+                >
+                  <PlusIcon className="w-5 h-5" />
+                  <span className="sr-only">Add to cart</span>
+                </Button>
+                <Button
+                  onClick={() => decrementQuantity(item._id)}
+                  size="icon"
+                  variant="ghost"
+                >
+                  <MinusIcon className="w-5 h-5" />
+                  <span className="sr-only">Remove</span>
+                </Button>
+              </div>
+            ))}
           </div>
         </div>
       </div>

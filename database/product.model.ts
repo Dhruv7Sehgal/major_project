@@ -25,6 +25,7 @@ const ProductSchema = new Schema<IProduct>({
     type: Number,
     required: true,
   },
+
   discountPrice: {
     type: Number,
   },
