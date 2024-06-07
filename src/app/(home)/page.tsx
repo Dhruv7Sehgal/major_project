@@ -1,20 +1,26 @@
-import React from "react";
-import { cookies } from "next/headers";
-import { getProducts } from "@/lib/actions/product.action";
 import Products from "@/components/Products";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselPrevious,
   CarouselNext,
+  CarouselPrevious,
 } from "@/components/ui/carousel";
+import { getProducts } from "@/lib/actions/product.action";
+import { cookies } from "next/headers";
 import Image from "next/image";
 
-const Page = async () => {
+const Page = async ({
+  searchParams,
+}: {
+  searchParams: { [key: string]: string | string[] | undefined };
+}) => {
   const cookieStore = cookies();
   const user = cookieStore.get("username");
-  const result = await getProducts({});
+  const result = await getProducts({
+    query: searchParams?.q || "",
+    filter: searchParams.filter || "",
+  });
 
   const products = result.products;
 
@@ -134,13 +140,17 @@ const Page = async () => {
           </Carousel>
         </section>
         <div className="flex flex-wrap gap-6 w-full p-16">
-          {products.map((item, key) => (
-            <Products
-              user={user}
-              key={key}
-              product={JSON.parse(JSON.stringify(item))}
-            />
-          ))}
+          {products.length > 0 ? (
+            products.map((item, key) => (
+              <Products
+                user={user}
+                key={key}
+                product={JSON.parse(JSON.stringify(item))}
+              />
+            ))
+          ) : (
+            <p className="text-3xl font-bold text-center">No Products Found</p>
+          )}
         </div>
       </div>
     </>

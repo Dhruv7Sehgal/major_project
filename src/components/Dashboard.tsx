@@ -19,12 +19,19 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { addProduct } from "@/lib/actions/product.action";
+import { addProductSchema } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { addProductSchema } from "@/lib/validation";
-import { addProduct } from "@/lib/actions/product.action";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./ui/select";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -166,9 +173,24 @@ export default function Dashboard() {
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel>Category</FormLabel>
-                            <FormControl>
-                              <Input placeholder="Category" {...field} />
-                            </FormControl>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
+                              <FormControl>
+                                <SelectTrigger>
+                                  <SelectValue placeholder="Select a category" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value="mobile">Mobile</SelectItem>
+                                <SelectItem value="laptop">Laptop</SelectItem>
+                                <SelectItem value="watch">Watch</SelectItem>
+                                <SelectItem value="accessories">
+                                  Accessories
+                                </SelectItem>
+                              </SelectContent>
+                            </Select>
 
                             <FormMessage />
                           </FormItem>
