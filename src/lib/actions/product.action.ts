@@ -6,41 +6,6 @@ import { connectToDatabase } from "../mongoose";
 import { ProductSchema } from "../types";
 import { GetProductsParams, GetProductsParamsById } from "./shared.types";
 
-export async function getProducts(params: GetProductsParams) {
-  try {
-    connectToDatabase();
-
-    const { query, filter } = params;
-
-    let filterQuery = {};
-
-    if (query) {
-      filterQuery = {
-        title: {
-          $regex: query,
-          $options: "i",
-        },
-      };
-    }
-
-    if (filter) {
-      filterQuery = {
-        ...filterQuery,
-        category: {
-          $in: filter,
-        },
-      };
-    }
-
-    const products = await Product.find(filterQuery);
-
-    return { products };
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-}
-
 export async function getProductById(params: GetProductsParamsById) {
   try {
     connectToDatabase();
@@ -100,5 +65,40 @@ export async function deleteProduct(params: any) {
   } catch (err) {
     console.log(err);
     throw err;
+  }
+}
+
+export async function getProducts(params: GetProductsParams) {
+  try {
+    connectToDatabase();
+
+    const { query, filter } = params;
+
+    let filterQuery = {};
+
+    if (query) {
+      filterQuery = {
+        title: {
+          $regex: query,
+          $options: "i",
+        },
+      };
+    }
+
+    if (filter) {
+      filterQuery = {
+        ...filterQuery,
+        category: {
+          $in: filter,
+        },
+      };
+    }
+
+    const products = await Product.find(filterQuery);
+
+    return { products };
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 }

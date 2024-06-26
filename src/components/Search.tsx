@@ -30,7 +30,7 @@ export function Search() {
             : updateQueryParams(pathname, value, "q", searchParams);
 
         router.push(url);
-      }, 500),
+      }, 200),
     [router, pathname, searchParams]
   );
 

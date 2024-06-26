@@ -86,7 +86,7 @@ export default function Nav({ user }: any) {
                   <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
                     {components.map((component) => (
                       <Link
-                        href={`?filter=${component.value}`}
+                        href={`?f=${component.value}`}
                         key={component.title}
                       >
                         {component.title}
@@ -226,13 +226,6 @@ export default function Nav({ user }: any) {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
             {renderIcon()}
-            <DropdownMenuItem>
-              <Link className="flex items-center gap-2" href="#">
-                <SettingsIcon className="h-4 w-4" />
-                <span>Settings</span>
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
             <DropdownMenuItem>
               {user?.value ? (
                 <p onClick={handleLogout} className="flex items-center gap-2">
